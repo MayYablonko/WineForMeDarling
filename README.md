@@ -8,3 +8,10 @@ WineForMeDarling is a Python script that automates the process of loading your m
 
 - Automates the process of loading your member card on the "יין בעיר" store's website.
 - Schedules the script to run daily at a specified time.
+
+## How to use?
+1. install python and pip
+2. pip install the following libraries: selenium, win10toast
+3. download the code, fill in your details (currently working only for 10bis card)
+4. put the code in Windows' Task Scheduler to run as needed
+5. cheers!
