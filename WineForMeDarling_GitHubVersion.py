@@ -1,6 +1,6 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from win10toast import ToastNotifier
 
 def loadMyWines():
 
@@ -14,7 +14,11 @@ def loadMyWines():
         'card_number': 0
     }
 
-    driver = webdriver.Chrome()
+    toast = ToastNotifier()
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
 
     driver.get(info['url'])
 
@@ -40,21 +44,17 @@ def loadMyWines():
 
     message = driver.find_element(by=By.CLASS_NAME, value="elementor-message-success")
     value = message.text
-    assert "בהצלחה" in value
+    
+    if "בהצלחה" in value:
+        toast.show_toast(title = "WineForMeDarling", msg = "Success!", duration = 20, icon_path = None,)
+    else:
+        toast.show_toast(title = "WineForMeDarling", msg = "Failed!", duration = 20, icon_path = None,)
+
+
 
     driver.quit()
 
 
-# Main script to run daily at 10 AM
-while True:
-    current_time = time.localtime()
-
-    # Check if it's 10 AM
-    if current_time.tm_hour == 10 and current_time.tm_min == 0:
-            loadMyWines()
-            print("Wines loaded at 10 AM for")
-
-    # Sleep for 1 minute and check again
-    time.sleep(60)
-
+if __name__ == "__main__":
+     loadMyWines()
 
